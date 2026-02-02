@@ -131,9 +131,9 @@ if not uploaded:
 # =====================================================
 # RAW 로드 & 전처리
 # =====================================================
-raw = pd.read_excel(uploaded)
+raw = pd.read_excel(uploaded, dtype=object)
 
-raw.columns = raw.columns.str.strip()
+raw.columns = raw.columns.map(lambda x: str(x).strip())
 raw["광고주"] = raw["광고주"].apply(normalize_advertiser)
 raw["통신사"] = raw["서비스"].apply(normalize_carrier)
 raw["초수"] = raw["재생시간"].apply(parse_sec)
@@ -284,3 +284,4 @@ st.download_button(
     file_name=f"APM_정산결과_{year}{month:02d}.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 )
+
